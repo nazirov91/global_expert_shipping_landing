@@ -280,7 +280,8 @@ export default function ContactSection() {
               </AlertDialogTitle>
             </div>
             <AlertDialogDescription className="text-black-700">
-              Thank you for your message! We'll get back to you within 1 hour.
+              Thank you for your message! We'll get back to you as soon as
+              possible!
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
