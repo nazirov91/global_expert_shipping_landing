@@ -5,6 +5,7 @@ import TrustSignals from './TrustSignals'
 import HowItWorks from './HowItWorks'
 import WhyChooseUs from './WhyChooseUs'
 import CustomerReviews from './CustomerReviews'
+import FAQSection from './FAQSection'
 import ContactSection from './ContactSection'
 import Footer from './Footer'
 
@@ -19,6 +20,7 @@ export default function HomePage() {
         <HowItWorks />
         <WhyChooseUs />
         <CustomerReviews />
+        <FAQSection />
         <ContactSection />
       </main>
       <Footer />

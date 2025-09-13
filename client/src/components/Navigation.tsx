@@ -46,6 +46,13 @@ export default function Navigation() {
                 Reviews
               </button>
               <button 
+                onClick={() => scrollToSection('faq')}
+                className="text-foreground hover:text-primary px-3 py-2 text-sm font-medium transition-colors hover-elevate"
+                data-testid="link-faq"
+              >
+                FAQ
+              </button>
+              <button 
                 onClick={() => scrollToSection('contact')}
                 className="text-foreground hover:text-primary px-3 py-2 text-sm font-medium transition-colors hover-elevate"
                 data-testid="link-contact"
@@ -108,6 +115,13 @@ export default function Navigation() {
               data-testid="link-mobile-reviews"
             >
               Reviews
+            </button>
+            <button
+              onClick={() => scrollToSection('faq')}
+              className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary hover-elevate w-full text-left"
+              data-testid="link-mobile-faq"
+            >
+              FAQ
             </button>
             <button
               onClick={() => scrollToSection('contact')}
