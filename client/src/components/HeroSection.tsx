@@ -1,0 +1,66 @@
+import QuoteForm from './QuoteForm'
+import { CheckCircle, Star } from 'lucide-react'
+
+export default function HeroSection() {
+  return (
+    <section id="quote" className="bg-gradient-to-br from-primary/5 via-background to-primary/10 py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left Column - Headline & Benefits */}
+          <div className="space-y-8">
+            <div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+                Reliable Auto Transport Services 
+                <span className="text-primary"> Nationwide</span>
+              </h1>
+              <p className="text-xl text-muted-foreground mt-6 leading-relaxed">
+                Professional car shipping with door-to-door service, full insurance coverage, 
+                and trusted nationwide network. Get your vehicle transported safely and affordably.
+              </p>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap items-center gap-6">
+              <div className="flex items-center gap-2">
+                <div className="flex">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-chart-1 text-chart-1" />
+                  ))}
+                </div>
+                <span className="text-sm font-medium">4.8/5 Rating</span>
+              </div>
+              <div className="text-sm text-muted-foreground">
+                Over 50,000 vehicles transported
+              </div>
+            </div>
+
+            {/* Key Benefits */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex items-center gap-3">
+                <CheckCircle className="h-5 w-5 text-chart-2 flex-shrink-0" />
+                <span className="text-foreground">Fully Insured & Licensed</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle className="h-5 w-5 text-chart-2 flex-shrink-0" />
+                <span className="text-foreground">Door-to-Door Service</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle className="h-5 w-5 text-chart-2 flex-shrink-0" />
+                <span className="text-foreground">Nationwide Coverage</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <CheckCircle className="h-5 w-5 text-chart-2 flex-shrink-0" />
+                <span className="text-foreground">Real-Time Tracking</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - Quote Form */}
+          <div className="flex justify-center lg:justify-end">
+            <QuoteForm />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
