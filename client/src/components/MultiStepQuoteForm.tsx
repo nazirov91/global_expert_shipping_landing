@@ -6,7 +6,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import { ArrowRight, ArrowLeft, MapPin, Car, User, Calendar } from 'lucide-react'
-import vehicleMakes from '@shared/vehicle-makes.json'
+// Common vehicle makes for the quote form
+const vehicleMakes = [
+  'Acura', 'Alfa Romeo', 'Aston Martin', 'Audi', 'Bentley', 'BMW', 'Buick', 'Cadillac', 
+  'Chevrolet', 'Chrysler', 'Dodge', 'Ferrari', 'Fiat', 'Ford', 'Genesis', 'GMC', 
+  'Honda', 'Hyundai', 'Infiniti', 'Jaguar', 'Jeep', 'Kia', 'Lamborghini', 'Land Rover', 
+  'Lexus', 'Lincoln', 'Maserati', 'Mazda', 'Mercedes-Benz', 'Mini', 'Mitsubishi', 
+  'Nissan', 'Porsche', 'Ram', 'Rolls-Royce', 'Subaru', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo'
+]
 
 interface StepOneData {
   origin: string
@@ -310,7 +317,7 @@ export default function MultiStepQuoteForm() {
                     <SelectValue placeholder="Choose vehicle make" />
                   </SelectTrigger>
                   <SelectContent>
-                    {vehicleMakes.map(make => (
+                    {vehicleMakes.map((make: string) => (
                       <SelectItem key={make} value={make}>{make}</SelectItem>
                     ))}
                   </SelectContent>
