@@ -4,7 +4,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { useToast } from '@/hooks/use-toast'
 import { Calendar, MapPin, Truck } from 'lucide-react'
 
 interface QuoteFormData {
@@ -18,7 +17,6 @@ interface QuoteFormData {
 }
 
 export default function QuoteForm() {
-  const { toast } = useToast()
   const [formData, setFormData] = useState<QuoteFormData>({
     origin: '',
     destination: '',
@@ -33,21 +31,7 @@ export default function QuoteForm() {
     e.preventDefault()
     console.log('Quote form submitted:', formData)
     // TODO: remove mock functionality - integrate with real quote system
-    toast({
-      title: "Quote Request Submitted!",
-      description: "Thank you! We'll contact you within 1 hour with your free quote.",
-    })
-    
-    // Reset form after successful submission
-    setFormData({
-      origin: '',
-      destination: '',
-      pickupDate: '',
-      trailerType: '',
-      name: '',
-      phone: '',
-      email: ''
-    })
+    alert('Thank you! Your quote request has been submitted. We\'ll contact you within 1 hour.')
   }
 
   const handleInputChange = (field: keyof QuoteFormData, value: string) => {

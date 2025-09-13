@@ -5,7 +5,6 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
-import { useToast } from '@/hooks/use-toast'
 import { ArrowRight, ArrowLeft, MapPin, Car, User, Calendar } from 'lucide-react'
 // Common vehicle makes for the quote form
 const vehicleMakes = [
@@ -47,7 +46,6 @@ interface NHTSAResponse {
 }
 
 export default function MultiStepQuoteForm() {
-  const { toast } = useToast()
   const [currentStep, setCurrentStep] = useState(1)
   const [stepOneData, setStepOneData] = useState<StepOneData>({
     origin: '',
@@ -125,10 +123,7 @@ export default function MultiStepQuoteForm() {
     e.preventDefault()
     console.log('Quote form submitted:', { stepOneData, stepTwoData, stepThreeData })
     // TODO: remove mock functionality - integrate with real quote system
-    toast({
-      title: "Quote Request Submitted!",
-      description: `Thank you ${stepThreeData.firstName}! You will receive your quote at ${stepThreeData.email}. We appreciate your business!`,
-    })
+    alert(`Thank you! You will receive your quote at ${stepThreeData.email}. We appreciate your business!`)
     
     // Reset form
     setCurrentStep(1)
