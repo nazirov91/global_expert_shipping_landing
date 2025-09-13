@@ -116,7 +116,7 @@ export default function MultiStepQuoteForm() {
     e.preventDefault()
     console.log('Quote form submitted:', { stepOneData, stepTwoData, stepThreeData })
     // TODO: remove mock functionality - integrate with real quote system
-    alert('Thank you! Your quote request has been submitted. We\'ll contact you within 1 hour.')
+    alert(`Thank you! You will receive your quote at ${stepThreeData.email}. We appreciate your business!`)
     
     // Reset form
     setCurrentStep(1)
