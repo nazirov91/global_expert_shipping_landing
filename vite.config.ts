@@ -25,18 +25,16 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname, "client"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    // ✅ now outputs straight to "dist/"
+    outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
   },
+  publicDir: path.resolve(import.meta.dirname, "dist/public"), // ✅ use dist/public as public assets folder
   server: {
     fs: {
       strict: true,
       deny: ["**/.*"],
     },
-    allowedHosts: [
-      "localhost",
-      "127.0.0.1",
-      "3303198c-2002-4978-b59c-3f005b1f462b-00-3nogggnhubwpo.worf.replit.dev",
-    ],
+    allowedHosts: ["*"], // allow replit dynamic host in dev
   },
 });
