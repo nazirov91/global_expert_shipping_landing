@@ -33,5 +33,10 @@ export default defineConfig({
       strict: true,
       deny: ["**/.*"],
     },
+    allowedHosts: [
+      "localhost",
+      "127.0.0.1",
+      "3303198c-2002-4978-b59c-3f005b1f462b-00-3nogggnhubwpo.worf.replit.dev",
+    ],
   },
 });
