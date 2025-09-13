@@ -18,13 +18,13 @@ const contactInfo = [
   {
     icon: Phone,
     title: 'Call Us Now',
-    details: '(800) 555-AUTO',
+    details: '(818) 431-0808',
     description: 'Speak with a transport specialist'
   },
   {
     icon: Mail,
     title: 'Email Us',
-    details: 'info@autoship-pro.com',
+    details: 'chris@marser.us',
     description: 'Get a response within 1 hour'
   },
   {
@@ -131,7 +131,7 @@ export default function ContactSection() {
                     onClick={() => console.log('Call now clicked')}
                   >
                     <Phone className="h-4 w-4 mr-2" />
-                    Call (800) 555-AUTO
+                    Call (818) 431-0808
                   </Button>
                   <Button 
                     variant="outline" 

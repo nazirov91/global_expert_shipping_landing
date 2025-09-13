@@ -57,7 +57,7 @@ export default function Footer() {
           {/* Company Info */}
           <div className="lg:col-span-2">
             <div className="text-2xl font-bold text-primary mb-4">
-              AutoShip Pro
+              Global Expert Shipping
             </div>
             <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
               America's trusted auto transport company with over 15 years of experience. 
@@ -68,11 +68,11 @@ export default function Footer() {
             <div className="space-y-2">
               <div className="flex items-center gap-3 text-sm">
                 <Phone className="h-4 w-4 text-primary" />
-                <span className="text-foreground">(800) 555-AUTO</span>
+                <span className="text-foreground">(818) 431-0808</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Mail className="h-4 w-4 text-primary" />
-                <span className="text-foreground">info@autoship-pro.com</span>
+                <span className="text-foreground">chris@marser.us</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <MapPin className="h-4 w-4 text-primary" />
@@ -127,7 +127,7 @@ export default function Footer() {
         <div className="py-6 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-sm text-muted-foreground">
-              © {currentYear} AutoShip Pro. All rights reserved.
+              © {currentYear} Global Expert Shipping. All rights reserved.
             </div>
             
             <div className="flex items-center gap-6 text-sm">

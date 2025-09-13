@@ -17,7 +17,7 @@ export default function Navigation() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <div className="text-2xl font-bold text-primary">
-              AutoShip Pro
+              Global Expert Shipping
             </div>
           </div>
 
@@ -59,7 +59,7 @@ export default function Navigation() {
           <div className="hidden md:flex items-center space-x-4">
             <div className="flex items-center text-sm text-muted-foreground">
               <Phone className="h-4 w-4 mr-1" />
-              <span>(800) 555-AUTO</span>
+              <span>(818) 431-0808</span>
             </div>
             <Button 
               onClick={() => scrollToSection('quote')}
@@ -119,7 +119,7 @@ export default function Navigation() {
             <div className="px-3 py-2">
               <div className="flex items-center text-sm text-muted-foreground mb-2">
                 <Phone className="h-4 w-4 mr-1" />
-                <span>(800) 555-AUTO</span>
+                <span>(818) 431-0808</span>
               </div>
               <Button 
                 onClick={() => scrollToSection('quote')}
