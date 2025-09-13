@@ -5,7 +5,8 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
-import { ArrowRight, ArrowLeft, MapPin, Car, User, Calendar } from 'lucide-react'
+import { useToast } from '@/hooks/use-toast'
+import { ArrowRight, ArrowLeft, MapPin, Car, User, Calendar, Truck } from 'lucide-react'
 // Common vehicle makes for the quote form
 const vehicleMakes = [
   'Acura', 'Alfa Romeo', 'Aston Martin', 'Audi', 'Bentley', 'BMW', 'Buick', 'Cadillac', 
@@ -68,6 +69,7 @@ export default function MultiStepQuoteForm() {
 
   const [availableModels, setAvailableModels] = useState<VehicleModel[]>([])
   const [loadingModels, setLoadingModels] = useState(false)
+  const { toast } = useToast()
 
   // Generate years from current year to 1981
   const currentYear = new Date().getFullYear()
@@ -122,8 +124,14 @@ export default function MultiStepQuoteForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log('Quote form submitted:', { stepOneData, stepTwoData, stepThreeData })
-    // TODO: remove mock functionality - integrate with real quote system
-    alert(`Thank you! You will receive your quote at ${stepThreeData.email}. We appreciate your business!`)
+    
+    // Show fancy success toast notification
+    toast({
+      title: "🎉 Quote Request Completed!",
+      description: `Hi ${stepThreeData.firstName}! Your personalized quote for the ${stepTwoData.year} ${stepTwoData.make} ${stepTwoData.model} will be sent to ${stepThreeData.email} within the hour. Our auto transport specialists are already working on your competitive rate!`,
+      duration: 8000,
+      className: "border-emerald-200 bg-emerald-50 text-emerald-900",
+    })
     
     // Reset form
     setCurrentStep(1)

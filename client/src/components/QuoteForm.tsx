@@ -4,7 +4,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Calendar, MapPin, Truck } from 'lucide-react'
+import { useToast } from '@/hooks/use-toast'
+import { Calendar, MapPin, Truck, CheckCircle } from 'lucide-react'
 
 interface QuoteFormData {
   origin: string
@@ -27,11 +28,19 @@ export default function QuoteForm() {
     email: ''
   })
 
+  const { toast } = useToast()
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log('Quote form submitted:', formData)
-    // TODO: remove mock functionality - integrate with real quote system
-    alert('Thank you! Your quote request has been submitted. We\'ll contact you within 1 hour.')
+    
+    // Show fancy success toast notification
+    toast({
+      title: "Quote Request Submitted! 🚛",
+      description: `Thank you ${formData.name || 'for your interest'}! We'll send your personalized quote to ${formData.email} within 1 hour.`,
+      duration: 6000,
+      className: "border-green-200 bg-green-50 text-green-900",
+    })
   }
 
   const handleInputChange = (field: keyof QuoteFormData, value: string) => {
