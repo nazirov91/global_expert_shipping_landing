@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { useToast } from '@/hooks/use-toast'
+import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 import { Calendar, MapPin, Truck, CheckCircle } from 'lucide-react'
 
 interface QuoteFormData {
@@ -28,19 +28,14 @@ export default function QuoteForm() {
     email: ''
   })
 
-  const { toast } = useToast()
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log('Quote form submitted:', formData)
     
-    // Show fancy success toast notification
-    toast({
-      title: "Quote Request Submitted! 🚛",
-      description: `Thank you ${formData.name || 'for your interest'}! We'll send your personalized quote to ${formData.email} within 1 hour.`,
-      duration: 6000,
-      className: "border-green-200 bg-green-50 text-green-900",
-    })
+    // Show success dialog
+    setShowSuccessDialog(true)
   }
 
   const handleInputChange = (field: keyof QuoteFormData, value: string) => {
@@ -170,6 +165,32 @@ export default function QuoteForm() {
           </Button>
         </form>
       </CardContent>
+
+      {/* Success Alert Dialog */}
+      <AlertDialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <AlertDialogContent className="sm:max-w-md">
+          <AlertDialogHeader>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                <CheckCircle className="h-5 w-5 text-green-600" />
+              </div>
+              <AlertDialogTitle className="text-green-800">Quote Request Submitted!</AlertDialogTitle>
+            </div>
+            <AlertDialogDescription className="text-green-700">
+              Thank you {formData.name || 'for your interest'}! We'll send your personalized quote to {formData.email} within 1 hour.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction 
+              onClick={() => setShowSuccessDialog(false)}
+              className="bg-green-600 hover:bg-green-700 text-white"
+              data-testid="button-close-quote-success-dialog"
+            >
+              OK
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   )
 }

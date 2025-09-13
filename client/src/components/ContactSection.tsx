@@ -4,7 +4,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Phone, Mail, MapPin, Clock, MessageSquare } from 'lucide-react'
+import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
+import { Phone, Mail, MapPin, Clock, MessageSquare, CheckCircle } from 'lucide-react'
 
 interface ContactFormData {
   name: string
@@ -49,12 +50,14 @@ export default function ContactSection() {
     subject: '',
     message: ''
   })
+  
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log('Contact form submitted:', formData)
     // TODO: remove mock functionality - integrate with real contact system
-    alert('Thank you for your message! We\'ll get back to you within 1 hour.')
+    setShowSuccessDialog(true)
     setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
   }
 
@@ -234,6 +237,32 @@ export default function ContactSection() {
           </Card>
         </div>
       </div>
+
+      {/* Success Alert Dialog */}
+      <AlertDialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <AlertDialogContent className="sm:max-w-md">
+          <AlertDialogHeader>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                <CheckCircle className="h-5 w-5 text-green-600" />
+              </div>
+              <AlertDialogTitle className="text-green-800">Message Sent Successfully!</AlertDialogTitle>
+            </div>
+            <AlertDialogDescription className="text-green-700">
+              Thank you for your message! We'll get back to you within 1 hour.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction 
+              onClick={() => setShowSuccessDialog(false)}
+              className="bg-green-600 hover:bg-green-700 text-white"
+              data-testid="button-close-success-dialog"
+            >
+              OK
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </section>
   )
 }

@@ -5,8 +5,8 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
-import { useToast } from '@/hooks/use-toast'
-import { ArrowRight, ArrowLeft, MapPin, Car, User, Calendar, Truck } from 'lucide-react'
+import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
+import { ArrowRight, ArrowLeft, MapPin, Car, User, Calendar, Truck, CheckCircle } from 'lucide-react'
 // Common vehicle makes for the quote form
 const vehicleMakes = [
   'Acura', 'Alfa Romeo', 'Aston Martin', 'Audi', 'Bentley', 'BMW', 'Buick', 'Cadillac', 
@@ -69,7 +69,8 @@ export default function MultiStepQuoteForm() {
 
   const [availableModels, setAvailableModels] = useState<VehicleModel[]>([])
   const [loadingModels, setLoadingModels] = useState(false)
-  const { toast } = useToast()
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false)
+  const [submittedData, setSubmittedData] = useState<{stepTwo: StepTwoData, stepThree: StepThreeData} | null>(null)
 
   // Generate years from current year to 1981
   const currentYear = new Date().getFullYear()
@@ -125,13 +126,11 @@ export default function MultiStepQuoteForm() {
     e.preventDefault()
     console.log('Quote form submitted:', { stepOneData, stepTwoData, stepThreeData })
     
-    // Show fancy success toast notification
-    toast({
-      title: "🎉 Quote Request Completed!",
-      description: `Hi ${stepThreeData.firstName}! Your personalized quote for the ${stepTwoData.year} ${stepTwoData.make} ${stepTwoData.model} will be sent to ${stepThreeData.email} within the hour. Our auto transport specialists are already working on your competitive rate!`,
-      duration: 8000,
-      className: "border-emerald-200 bg-emerald-50 text-emerald-900",
-    })
+    // Save submitted data for dialog before resetting
+    setSubmittedData({ stepTwo: stepTwoData, stepThree: stepThreeData })
+    
+    // Show success dialog
+    setShowSuccessDialog(true)
     
     // Reset form
     setCurrentStep(1)
@@ -471,6 +470,35 @@ export default function MultiStepQuoteForm() {
           )}
         </form>
       </CardContent>
+
+      {/* Success Alert Dialog */}
+      <AlertDialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+        <AlertDialogContent className="sm:max-w-lg">
+          <AlertDialogHeader>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                <CheckCircle className="h-5 w-5 text-emerald-600" />
+              </div>
+              <AlertDialogTitle className="text-emerald-800">Quote Request Completed!</AlertDialogTitle>
+            </div>
+            <AlertDialogDescription className="text-emerald-700">
+              Hi {submittedData?.stepThree.firstName}! Your personalized quote for the {submittedData?.stepTwo.year} {submittedData?.stepTwo.make} {submittedData?.stepTwo.model} will be sent to {submittedData?.stepThree.email} within the hour. Our auto transport specialists are already working on your competitive rate!
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction 
+              onClick={() => {
+                setShowSuccessDialog(false)
+                setSubmittedData(null)
+              }}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              data-testid="button-close-multistep-success-dialog"
+            >
+              Awesome!
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   )
 }
