@@ -3,8 +3,19 @@
 
 echo "Building for Netlify deployment..."
 
-# Run the standard build
-npm run build
+# Set production environment to avoid Replit-specific plugins
+export NODE_ENV=production
+# Ensure REPL_ID is not set to avoid loading Replit plugins
+unset REPL_ID
+
+# Use Netlify-specific Vite config to avoid Replit dependencies
+if [ -f "vite.config.netlify.ts" ]; then
+    echo "Using Netlify-specific Vite config..."
+    npx vite build --config vite.config.netlify.ts
+else
+    echo "Using default Vite config..."
+    npm run build
+fi
 
 # Check if build output is in dist/public (Replit format)
 if [ -d "dist/public" ]; then
