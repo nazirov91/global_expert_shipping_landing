@@ -10,32 +10,9 @@ Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
-### Frontend Architecture
-- **Framework**: React 18 with TypeScript for type safety and modern development
-- **Routing**: Wouter for lightweight client-side routing
-- **Build Tool**: Vite for fast development and optimized production builds
-- **UI Components**: Radix UI primitives with shadcn/ui component library for consistent, accessible design
-- **Styling**: Tailwind CSS with custom design system based on professional blue/orange color palette
-- **State Management**: TanStack Query for server state management and caching
-- **Forms**: React Hook Form with Zod validation for robust form handling
-
-### Backend Architecture
-- **Runtime**: Node.js with Express.js for the API server
-- **Language**: TypeScript for full-stack type safety
-- **Database ORM**: Drizzle ORM for type-safe database operations
-- **Storage Interface**: Abstracted storage layer with in-memory implementation for development
-- **API Design**: RESTful API pattern with /api prefix for all backend routes
-
-### Data Storage Solutions
-- **Database**: PostgreSQL configured through Drizzle ORM (currently using Neon serverless)
-- **Schema**: User management system with username/password authentication
-- **Migrations**: Drizzle Kit for database schema migrations and management
-- **Development Storage**: In-memory storage implementation for local development
-
-### Authentication and Authorization
-- **Session Management**: Express session handling with PostgreSQL session store (connect-pg-simple)
-- **User Model**: Simple username/password system with unique constraints
-- **Validation**: Zod schemas for input validation and type safety
+### Static Website
+- **Purely static** - website that can be hosted on any static web hosting service including Netlify, Vercel or Decap CMS
+- **No Backend Dependancy** - It does not depend on backend. It executes all http calls on the front end
 
 ### Design System
 - **Component Library**: Custom implementation of shadcn/ui components
