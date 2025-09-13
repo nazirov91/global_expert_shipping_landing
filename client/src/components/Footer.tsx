@@ -1,53 +1,58 @@
-import { Button } from '@/components/ui/button'
-import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react'
+import { Button } from "@/components/ui/button";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Facebook,
+  Twitter,
+  Linkedin,
+  Instagram,
+} from "lucide-react";
 
 const footerSections = [
   {
-    title: 'Services',
+    title: "Services",
     links: [
-      { name: 'Car Shipping', href: '#services' },
-      { name: 'Motorcycle Transport', href: '#services' },
-      { name: 'Open Carrier', href: '#services' },
-      { name: 'Enclosed Transport', href: '#services' },
-      { name: 'Express Delivery', href: '#services' }
-    ]
+      { name: "Car Shipping", href: "#services" },
+      { name: "Motorcycle Transport", href: "#services" },
+      { name: "Open Carrier", href: "#services" },
+      { name: "Enclosed Transport", href: "#services" },
+      { name: "Express Delivery", href: "#services" },
+    ],
   },
   {
-    title: 'Company',
+    title: "Company",
     links: [
-      { name: 'About Us', href: '#about' },
-      { name: 'How It Works', href: '#how-it-works' },
-      { name: 'Reviews', href: '#reviews' },
-      { name: 'Careers', href: '#careers' },
-      { name: 'Blog', href: '#blog' }
-    ]
+      { name: "About Us", href: "#about" },
+      { name: "How It Works", href: "#how-it-works" },
+      { name: "Reviews", href: "#reviews" },
+      { name: "Careers", href: "#careers" },
+      { name: "Blog", href: "#blog" },
+    ],
   },
   {
-    title: 'Support',
+    title: "Support",
     links: [
-      { name: 'Contact Us', href: '#contact' },
-      { name: 'FAQ', href: '#faq' },
-      { name: 'Track Shipment', href: '#track' },
-      { name: 'File a Claim', href: '#claims' },
-      { name: 'Customer Portal', href: '#portal' }
-    ]
-  }
-]
+      { name: "Contact Us", href: "#contact" },
+      { name: "FAQ", href: "#faq" },
+    ],
+  },
+];
 
 const socialLinks = [
-  { icon: Facebook, href: '#', label: 'Facebook' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Instagram, href: '#', label: 'Instagram' }
-]
+  { icon: Facebook, href: "#", label: "Facebook" },
+  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: Instagram, href: "#", label: "Instagram" },
+];
 
 export default function Footer() {
   const scrollToSection = (sectionId: string) => {
-    const id = sectionId.startsWith('#') ? sectionId.substring(1) : sectionId
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-  }
+    const id = sectionId.startsWith("#") ? sectionId.substring(1) : sectionId;
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
 
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-primary/5 border-t">
@@ -60,10 +65,11 @@ export default function Footer() {
               Global Expert Shipping
             </div>
             <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
-              America's trusted auto transport company with over 15 years of experience. 
-              We provide safe, reliable, and affordable vehicle shipping services nationwide.
+              America's trusted auto transport company with over 15 years of
+              experience. We provide safe, reliable, and affordable vehicle
+              shipping services nationwide.
             </p>
-            
+
             {/* Contact Info */}
             <div className="space-y-2">
               <div className="flex items-center gap-3 text-sm">
@@ -83,7 +89,7 @@ export default function Footer() {
             {/* Social Links */}
             <div className="flex items-center gap-3 mt-6">
               {socialLinks.map((social, index) => {
-                const IconComponent = social.icon
+                const IconComponent = social.icon;
                 return (
                   <Button
                     key={index}
@@ -95,7 +101,7 @@ export default function Footer() {
                   >
                     <IconComponent className="h-4 w-4" />
                   </Button>
-                )
+                );
               })}
             </div>
           </div>
@@ -112,7 +118,7 @@ export default function Footer() {
                     <button
                       onClick={() => scrollToSection(link.href)}
                       className="text-sm text-muted-foreground hover:text-primary transition-colors hover-elevate"
-                      data-testid={`link-${link.name.toLowerCase().replace(/\s+/g, '-')}`}
+                      data-testid={`link-${link.name.toLowerCase().replace(/\s+/g, "-")}`}
                     >
                       {link.name}
                     </button>
@@ -129,29 +135,27 @@ export default function Footer() {
             <div className="text-sm text-muted-foreground">
               © {currentYear} Global Expert Shipping. All rights reserved.
             </div>
-            
+
             <div className="flex items-center gap-6 text-sm">
-              <button 
+              <button
                 className="text-muted-foreground hover:text-primary transition-colors hover-elevate"
-                onClick={() => console.log('Privacy policy clicked')}
+                onClick={() => console.log("Privacy policy clicked")}
                 data-testid="link-privacy-policy"
               >
                 Privacy Policy
               </button>
-              <button 
+              <button
                 className="text-muted-foreground hover:text-primary transition-colors hover-elevate"
-                onClick={() => console.log('Terms of service clicked')}
+                onClick={() => console.log("Terms of service clicked")}
                 data-testid="link-terms-of-service"
               >
                 Terms of Service
               </button>
-              <span className="text-muted-foreground">
-                FMCSA MC-123456
-              </span>
+              <span className="text-muted-foreground">FMCSA MC-123456</span>
             </div>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }
