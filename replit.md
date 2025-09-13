@@ -53,14 +53,12 @@ Preferred communication style: Simple, everyday language.
 ## External Dependencies
 
 ### Third-Party Services
-- **Neon Database**: Serverless PostgreSQL database hosting
 - **NHTSA API**: Vehicle make and model data for quote form
 - **Google Fonts**: Inter font family for typography
 - **Replit**: Development environment with specific vite plugins
 
 ### Key Libraries
 - **UI Framework**: React 18 with TypeScript
-- **Database**: Drizzle ORM with PostgreSQL driver (@neondatabase/serverless)
 - **Form Handling**: React Hook Form with Hookform resolvers
 - **Validation**: Zod for schema validation
 - **Styling**: Tailwind CSS with PostCSS
@@ -71,7 +69,6 @@ Preferred communication style: Simple, everyday language.
 
 ### Development Tools
 - **Build**: Vite with React plugin and TypeScript support
-- **Database Tools**: Drizzle Kit for migrations and schema management
 - **Code Quality**: TypeScript compiler for type checking
 - **Session Storage**: connect-pg-simple for PostgreSQL session management
 
