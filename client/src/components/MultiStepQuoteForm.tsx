@@ -1,207 +1,316 @@
-import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Switch } from '@/components/ui/switch'
-import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
-import { ArrowRight, ArrowLeft, MapPin, Car, User, Calendar, Truck, CheckCircle } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
+  ArrowRight,
+  ArrowLeft,
+  MapPin,
+  Car,
+  User,
+  Calendar,
+  Truck,
+  CheckCircle,
+} from "lucide-react";
 // Common vehicle makes for the quote form
 const vehicleMakes = [
-  'Acura', 'Alfa Romeo', 'Aston Martin', 'Audi', 'Bentley', 'BMW', 'Buick', 'Cadillac', 
-  'Chevrolet', 'Chrysler', 'Dodge', 'Ferrari', 'Fiat', 'Ford', 'Genesis', 'GMC', 
-  'Honda', 'Hyundai', 'Infiniti', 'Jaguar', 'Jeep', 'Kia', 'Lamborghini', 'Land Rover', 
-  'Lexus', 'Lincoln', 'Maserati', 'Mazda', 'Mercedes-Benz', 'Mini', 'Mitsubishi', 
-  'Nissan', 'Porsche', 'Ram', 'Rolls-Royce', 'Subaru', 'Tesla', 'Toyota', 'Volkswagen', 'Volvo'
-]
+  "Acura",
+  "Alfa Romeo",
+  "Aston Martin",
+  "Audi",
+  "Bentley",
+  "BMW",
+  "Buick",
+  "Cadillac",
+  "Chevrolet",
+  "Chrysler",
+  "Dodge",
+  "Ferrari",
+  "Fiat",
+  "Ford",
+  "Genesis",
+  "GMC",
+  "Honda",
+  "Hyundai",
+  "Infiniti",
+  "Jaguar",
+  "Jeep",
+  "Kia",
+  "Lamborghini",
+  "Land Rover",
+  "Lexus",
+  "Lincoln",
+  "Maserati",
+  "Mazda",
+  "Mercedes-Benz",
+  "Mini",
+  "Mitsubishi",
+  "Nissan",
+  "Porsche",
+  "Ram",
+  "Rolls-Royce",
+  "Subaru",
+  "Tesla",
+  "Toyota",
+  "Volkswagen",
+  "Volvo",
+];
 
 interface StepOneData {
-  origin: string
-  destination: string
-  pickupDate: string
-  trailerType: 'open' | 'enclosed'
+  origin: string;
+  destination: string;
+  pickupDate: string;
+  trailerType: "open" | "enclosed";
 }
 
 interface StepTwoData {
-  year: string
-  make: string
-  model: string
-  isOperable: boolean
+  year: string;
+  make: string;
+  model: string;
+  isOperable: boolean;
 }
 
 interface StepThreeData {
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
 }
 
 interface VehicleModel {
-  Model_ID: number
-  Model_Name: string
+  Model_ID: number;
+  Model_Name: string;
 }
 
 interface NHTSAResponse {
-  Results: VehicleModel[]
+  Results: VehicleModel[];
 }
 
 export default function MultiStepQuoteForm() {
-  const [currentStep, setCurrentStep] = useState(1)
+  const [currentStep, setCurrentStep] = useState(1);
   const [stepOneData, setStepOneData] = useState<StepOneData>({
-    origin: '',
-    destination: '',
-    pickupDate: '',
-    trailerType: 'open'
-  })
+    origin: "",
+    destination: "",
+    pickupDate: "",
+    trailerType: "open",
+  });
   const [stepTwoData, setStepTwoData] = useState<StepTwoData>({
-    year: '',
-    make: '',
-    model: '',
-    isOperable: true
-  })
+    year: "",
+    make: "",
+    model: "",
+    isOperable: true,
+  });
   const [stepThreeData, setStepThreeData] = useState<StepThreeData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: ''
-  })
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+  });
 
-  const [availableModels, setAvailableModels] = useState<VehicleModel[]>([])
-  const [loadingModels, setLoadingModels] = useState(false)
-  const [showSuccessDialog, setShowSuccessDialog] = useState(false)
-  const [submittedData, setSubmittedData] = useState<{stepTwo: StepTwoData, stepThree: StepThreeData} | null>(null)
+  const [availableModels, setAvailableModels] = useState<VehicleModel[]>([]);
+  const [loadingModels, setLoadingModels] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [submittedData, setSubmittedData] = useState<{
+    stepTwo: StepTwoData;
+    stepThree: StepThreeData;
+  } | null>(null);
 
   // Generate years from current year to 1981
-  const currentYear = new Date().getFullYear()
-  const years = Array.from({ length: currentYear - 1980 }, (_, i) => currentYear - i)
+  const currentYear = new Date().getFullYear();
+  const years = Array.from(
+    { length: currentYear - 1980 },
+    (_, i) => currentYear - i,
+  );
 
   // Fetch models when make and year change
   useEffect(() => {
     const fetchModels = async () => {
       if (stepTwoData.make && stepTwoData.year) {
-        setLoadingModels(true)
+        setLoadingModels(true);
         try {
           const response = await fetch(
-            `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${stepTwoData.make}/modelyear/${stepTwoData.year}?format=json`
-          )
-          const data: NHTSAResponse = await response.json()
-          setAvailableModels(data.Results || [])
+            `https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMakeYear/make/${stepTwoData.make}/modelyear/${stepTwoData.year}?format=json`,
+          );
+          const data: NHTSAResponse = await response.json();
+          setAvailableModels(data.Results || []);
         } catch (error) {
-          console.error('Error fetching vehicle models:', error)
-          setAvailableModels([])
+          console.error("Error fetching vehicle models:", error);
+          setAvailableModels([]);
         } finally {
-          setLoadingModels(false)
+          setLoadingModels(false);
         }
       } else {
-        setAvailableModels([])
+        setAvailableModels([]);
       }
-    }
+    };
 
-    fetchModels()
-  }, [stepTwoData.make, stepTwoData.year])
+    fetchModels();
+  }, [stepTwoData.make, stepTwoData.year]);
 
   // Reset model when make or year changes
   useEffect(() => {
-    setStepTwoData(prev => ({ ...prev, model: '' }))
-  }, [stepTwoData.make, stepTwoData.year])
+    setStepTwoData((prev) => ({ ...prev, model: "" }));
+  }, [stepTwoData.make, stepTwoData.year]);
 
-  const canProceedFromStep1 = stepOneData.origin && stepOneData.destination && stepOneData.pickupDate && stepOneData.trailerType
-  const canProceedFromStep2 = stepTwoData.year && stepTwoData.make && stepTwoData.model
-  const canSubmitForm = stepThreeData.firstName && stepThreeData.lastName && stepThreeData.email && stepThreeData.phone
+  const canProceedFromStep1 =
+    stepOneData.origin &&
+    stepOneData.destination &&
+    stepOneData.pickupDate &&
+    stepOneData.trailerType;
+  const canProceedFromStep2 =
+    stepTwoData.year && stepTwoData.make && stepTwoData.model;
+  const canSubmitForm =
+    stepThreeData.firstName &&
+    stepThreeData.lastName &&
+    stepThreeData.email &&
+    stepThreeData.phone;
 
   const handleNext = () => {
     if (currentStep < 3) {
-      setCurrentStep(currentStep + 1)
+      setCurrentStep(currentStep + 1);
     }
-  }
+  };
 
   const handlePrevious = () => {
     if (currentStep > 1) {
-      setCurrentStep(currentStep - 1)
+      setCurrentStep(currentStep - 1);
     }
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Quote form submitted:', { stepOneData, stepTwoData, stepThreeData })
-    
+    e.preventDefault();
+    console.log("Quote form submitted:", {
+      stepOneData,
+      stepTwoData,
+      stepThreeData,
+    });
+
     // Save submitted data for dialog before resetting
-    setSubmittedData({ stepTwo: stepTwoData, stepThree: stepThreeData })
-    
+    setSubmittedData({ stepTwo: stepTwoData, stepThree: stepThreeData });
+
     // Show success dialog
-    setShowSuccessDialog(true)
-    
+    setShowSuccessDialog(true);
+
     // Reset form
-    setCurrentStep(1)
-    setStepOneData({ origin: '', destination: '', pickupDate: '', trailerType: 'open' })
-    setStepTwoData({ year: '', make: '', model: '', isOperable: true })
-    setStepThreeData({ firstName: '', lastName: '', email: '', phone: '' })
-  }
+    setCurrentStep(1);
+    setStepOneData({
+      origin: "",
+      destination: "",
+      pickupDate: "",
+      trailerType: "open",
+    });
+    setStepTwoData({ year: "", make: "", model: "", isOperable: true });
+    setStepThreeData({ firstName: "", lastName: "", email: "", phone: "" });
+  };
 
   const getStepIcon = (step: number) => {
     switch (step) {
-      case 1: return MapPin
-      case 2: return Car
-      case 3: return User
-      default: return MapPin
+      case 1:
+        return MapPin;
+      case 2:
+        return Car;
+      case 3:
+        return User;
+      default:
+        return MapPin;
     }
-  }
+  };
 
   const getStepTitle = (step: number) => {
     switch (step) {
-      case 1: return 'Destination'
-      case 2: return 'Vehicle'
-      case 3: return 'Contact'
-      default: return 'Destination'
+      case 1:
+        return "Destination";
+      case 2:
+        return "Vehicle";
+      case 3:
+        return "Contact";
+      default:
+        return "Destination";
     }
-  }
+  };
 
   return (
     <Card className="w-full max-w-md shadow-lg">
       <CardHeader className="text-center">
-        <CardTitle className="text-xl font-bold text-primary">Get Your Free Quote</CardTitle>
-        <CardDescription>Step {currentStep} of 3 - {getStepTitle(currentStep)}</CardDescription>
+        <CardTitle className="text-xl font-bold text-primary">
+          Get Your Free Quote
+        </CardTitle>
+        <CardDescription>
+          Step {currentStep} of 3 - {getStepTitle(currentStep)}
+        </CardDescription>
       </CardHeader>
 
       {/* Step Indicators */}
       <div className="px-6 pb-4">
         <div className="flex items-center justify-between mb-4">
           {[1, 2, 3].map((step) => {
-            const StepIcon = getStepIcon(step)
-            const isActive = step === currentStep
-            const isCompleted = step < currentStep
-            const isClickable = step <= currentStep || (step === 2 && canProceedFromStep1) || (step === 3 && canProceedFromStep2)
-            
+            const StepIcon = getStepIcon(step);
+            const isActive = step === currentStep;
+            const isCompleted = step < currentStep;
+            const isClickable =
+              step <= currentStep ||
+              (step === 2 && canProceedFromStep1) ||
+              (step === 3 && canProceedFromStep2);
+
             return (
               <div key={step} className="flex flex-col items-center">
                 <button
                   onClick={() => isClickable && setCurrentStep(step)}
                   className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-colors ${
-                    isActive 
-                      ? 'bg-primary text-white' 
-                      : isCompleted 
-                      ? 'bg-chart-2 text-white'
-                      : 'bg-muted text-muted-foreground'
-                  } ${isClickable ? 'hover-elevate cursor-pointer' : 'cursor-not-allowed opacity-50'}`}
+                    isActive
+                      ? "bg-primary text-white"
+                      : isCompleted
+                        ? "bg-chart-2 text-white"
+                        : "bg-muted text-muted-foreground"
+                  } ${isClickable ? "hover-elevate cursor-pointer" : "cursor-not-allowed opacity-50"}`}
                   disabled={!isClickable}
                   data-testid={`step-indicator-${step}`}
                 >
                   <StepIcon className="h-4 w-4" />
                 </button>
-                <span className={`text-xs font-medium ${
-                  isActive ? 'text-primary' : isCompleted ? 'text-chart-2' : 'text-muted-foreground'
-                }`}>
+                <span
+                  className={`text-xs font-medium ${
+                    isActive
+                      ? "text-primary"
+                      : isCompleted
+                        ? "text-chart-2"
+                        : "text-muted-foreground"
+                  }`}
+                >
                   {getStepTitle(step)}
                 </span>
               </div>
-            )
+            );
           })}
         </div>
-        
+
         {/* Progress Bar */}
         <div className="w-full bg-muted rounded-full h-1">
-          <div 
+          <div
             className="bg-primary h-1 rounded-full transition-all duration-300"
             style={{ width: `${(currentStep / 3) * 100}%` }}
           />
@@ -219,7 +328,12 @@ export default function MultiStepQuoteForm() {
                   id="origin"
                   placeholder="Enter origin address"
                   value={stepOneData.origin}
-                  onChange={(e) => setStepOneData(prev => ({ ...prev, origin: e.target.value }))}
+                  onChange={(e) =>
+                    setStepOneData((prev) => ({
+                      ...prev,
+                      origin: e.target.value,
+                    }))
+                  }
                   data-testid="input-origin"
                   required
                 />
@@ -231,7 +345,12 @@ export default function MultiStepQuoteForm() {
                   id="destination"
                   placeholder="Enter destination address"
                   value={stepOneData.destination}
-                  onChange={(e) => setStepOneData(prev => ({ ...prev, destination: e.target.value }))}
+                  onChange={(e) =>
+                    setStepOneData((prev) => ({
+                      ...prev,
+                      destination: e.target.value,
+                    }))
+                  }
                   data-testid="input-destination"
                   required
                 />
@@ -245,7 +364,12 @@ export default function MultiStepQuoteForm() {
                     type="date"
                     placeholder="Enter pick up date"
                     value={stepOneData.pickupDate}
-                    onChange={(e) => setStepOneData(prev => ({ ...prev, pickupDate: e.target.value }))}
+                    onChange={(e) =>
+                      setStepOneData((prev) => ({
+                        ...prev,
+                        pickupDate: e.target.value,
+                      }))
+                    }
                     data-testid="input-pickup-date"
                     required
                   />
@@ -262,12 +386,19 @@ export default function MultiStepQuoteForm() {
                       id="open"
                       name="trailerType"
                       value="open"
-                      checked={stepOneData.trailerType === 'open'}
-                      onChange={(e) => setStepOneData(prev => ({ ...prev, trailerType: e.target.value as 'open' | 'enclosed' }))}
+                      checked={stepOneData.trailerType === "open"}
+                      onChange={(e) =>
+                        setStepOneData((prev) => ({
+                          ...prev,
+                          trailerType: e.target.value as "open" | "enclosed",
+                        }))
+                      }
                       className="w-4 h-4 text-primary"
                       data-testid="radio-open"
                     />
-                    <Label htmlFor="open" className="cursor-pointer">Open</Label>
+                    <Label htmlFor="open" className="cursor-pointer">
+                      Open
+                    </Label>
                   </div>
                   <div className="flex items-center space-x-2">
                     <input
@@ -275,12 +406,19 @@ export default function MultiStepQuoteForm() {
                       id="enclosed"
                       name="trailerType"
                       value="enclosed"
-                      checked={stepOneData.trailerType === 'enclosed'}
-                      onChange={(e) => setStepOneData(prev => ({ ...prev, trailerType: e.target.value as 'open' | 'enclosed' }))}
+                      checked={stepOneData.trailerType === "enclosed"}
+                      onChange={(e) =>
+                        setStepOneData((prev) => ({
+                          ...prev,
+                          trailerType: e.target.value as "open" | "enclosed",
+                        }))
+                      }
                       className="w-4 h-4 text-primary"
                       data-testid="radio-enclosed"
                     />
-                    <Label htmlFor="enclosed" className="cursor-pointer">Enclosed</Label>
+                    <Label htmlFor="enclosed" className="cursor-pointer">
+                      Enclosed
+                    </Label>
                   </div>
                 </div>
               </div>
@@ -305,13 +443,20 @@ export default function MultiStepQuoteForm() {
             <div className="space-y-4">
               <div className="space-y-2">
                 <Label>* Year</Label>
-                <Select value={stepTwoData.year} onValueChange={(value) => setStepTwoData(prev => ({ ...prev, year: value }))}>
+                <Select
+                  value={stepTwoData.year}
+                  onValueChange={(value) =>
+                    setStepTwoData((prev) => ({ ...prev, year: value }))
+                  }
+                >
                   <SelectTrigger data-testid="select-year">
                     <SelectValue placeholder="Choose vehicle year" />
                   </SelectTrigger>
                   <SelectContent>
-                    {years.map(year => (
-                      <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
+                    {years.map((year) => (
+                      <SelectItem key={year} value={year.toString()}>
+                        {year}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -319,13 +464,20 @@ export default function MultiStepQuoteForm() {
 
               <div className="space-y-2">
                 <Label>* Vehicle Make</Label>
-                <Select value={stepTwoData.make} onValueChange={(value) => setStepTwoData(prev => ({ ...prev, make: value }))}>
+                <Select
+                  value={stepTwoData.make}
+                  onValueChange={(value) =>
+                    setStepTwoData((prev) => ({ ...prev, make: value }))
+                  }
+                >
                   <SelectTrigger data-testid="select-make">
                     <SelectValue placeholder="Choose vehicle make" />
                   </SelectTrigger>
                   <SelectContent>
                     {vehicleMakes.map((make: string) => (
-                      <SelectItem key={make} value={make}>{make}</SelectItem>
+                      <SelectItem key={make} value={make}>
+                        {make}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
@@ -333,22 +485,28 @@ export default function MultiStepQuoteForm() {
 
               <div className="space-y-2">
                 <Label>* Vehicle Model</Label>
-                <Select 
-                  value={stepTwoData.model} 
-                  onValueChange={(value) => setStepTwoData(prev => ({ ...prev, model: value }))}
-                  disabled={!stepTwoData.make || !stepTwoData.year || loadingModels}
+                <Select
+                  value={stepTwoData.model}
+                  onValueChange={(value) =>
+                    setStepTwoData((prev) => ({ ...prev, model: value }))
+                  }
+                  disabled={
+                    !stepTwoData.make || !stepTwoData.year || loadingModels
+                  }
                 >
                   <SelectTrigger data-testid="select-model">
-                    <SelectValue placeholder={
-                      loadingModels 
-                        ? "Loading models..." 
-                        : !stepTwoData.make || !stepTwoData.year 
-                        ? "Choose year and make first"
-                        : "Choose vehicle model"
-                    } />
+                    <SelectValue
+                      placeholder={
+                        loadingModels
+                          ? "Loading models..."
+                          : !stepTwoData.make || !stepTwoData.year
+                            ? "Choose year and make first"
+                            : "Choose vehicle model"
+                      }
+                    />
                   </SelectTrigger>
                   <SelectContent>
-                    {availableModels.map(model => (
+                    {availableModels.map((model) => (
                       <SelectItem key={model.Model_ID} value={model.Model_Name}>
                         {model.Model_Name}
                       </SelectItem>
@@ -363,12 +521,17 @@ export default function MultiStepQuoteForm() {
                   <Switch
                     id="operable"
                     checked={stepTwoData.isOperable}
-                    onCheckedChange={(checked) => setStepTwoData(prev => ({ ...prev, isOperable: checked }))}
+                    onCheckedChange={(checked) =>
+                      setStepTwoData((prev) => ({
+                        ...prev,
+                        isOperable: checked,
+                      }))
+                    }
                     data-testid="switch-operable"
                   />
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {stepTwoData.isOperable ? 'Yes' : 'No'}
+                  {stepTwoData.isOperable ? "Yes" : "No"}
                 </p>
               </div>
 
@@ -404,7 +567,12 @@ export default function MultiStepQuoteForm() {
                     id="firstName"
                     placeholder="First name"
                     value={stepThreeData.firstName}
-                    onChange={(e) => setStepThreeData(prev => ({ ...prev, firstName: e.target.value }))}
+                    onChange={(e) =>
+                      setStepThreeData((prev) => ({
+                        ...prev,
+                        firstName: e.target.value,
+                      }))
+                    }
                     data-testid="input-first-name"
                     required
                   />
@@ -415,7 +583,12 @@ export default function MultiStepQuoteForm() {
                     id="lastName"
                     placeholder="Last name"
                     value={stepThreeData.lastName}
-                    onChange={(e) => setStepThreeData(prev => ({ ...prev, lastName: e.target.value }))}
+                    onChange={(e) =>
+                      setStepThreeData((prev) => ({
+                        ...prev,
+                        lastName: e.target.value,
+                      }))
+                    }
                     data-testid="input-last-name"
                     required
                   />
@@ -429,7 +602,12 @@ export default function MultiStepQuoteForm() {
                   type="email"
                   placeholder="your@email.com"
                   value={stepThreeData.email}
-                  onChange={(e) => setStepThreeData(prev => ({ ...prev, email: e.target.value }))}
+                  onChange={(e) =>
+                    setStepThreeData((prev) => ({
+                      ...prev,
+                      email: e.target.value,
+                    }))
+                  }
                   data-testid="input-email"
                   required
                 />
@@ -442,7 +620,12 @@ export default function MultiStepQuoteForm() {
                   type="tel"
                   placeholder="(555) 123-4567"
                   value={stepThreeData.phone}
-                  onChange={(e) => setStepThreeData(prev => ({ ...prev, phone: e.target.value }))}
+                  onChange={(e) =>
+                    setStepThreeData((prev) => ({
+                      ...prev,
+                      phone: e.target.value,
+                    }))
+                  }
                   data-testid="input-phone"
                   required
                 />
@@ -479,19 +662,26 @@ export default function MultiStepQuoteForm() {
               <div className="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
                 <CheckCircle className="h-5 w-5 text-emerald-600" />
               </div>
-              <AlertDialogTitle className="text-emerald-800">Quote Request Completed!</AlertDialogTitle>
+              <AlertDialogTitle className="text-emerald-800">
+                Quote Request Completed!
+              </AlertDialogTitle>
             </div>
-            <AlertDialogDescription className="text-emerald-700">
-              Hi {submittedData?.stepThree.firstName}! Your personalized quote for the {submittedData?.stepTwo.year} {submittedData?.stepTwo.make} {submittedData?.stepTwo.model} will be sent to {submittedData?.stepThree.email} within the hour. Our auto transport specialists are already working on your competitive rate!
+            <AlertDialogDescription className="text-black-700">
+              Hi {submittedData?.stepThree.firstName}! Your personalized quote
+              for the {submittedData?.stepTwo.year}{" "}
+              {submittedData?.stepTwo.make} {submittedData?.stepTwo.model} will
+              be sent to {submittedData?.stepThree.email} within seconds! Our
+              auto transport specialists are already working on your competitive
+              rate!
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={() => {
-                setShowSuccessDialog(false)
-                setSubmittedData(null)
+                setShowSuccessDialog(false);
+                setSubmittedData(null);
               }}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white"
+              className="bg-black-600 hover:bg-black-700 text-black"
               data-testid="button-close-multistep-success-dialog"
             >
               Awesome!
@@ -500,5 +690,5 @@ export default function MultiStepQuoteForm() {
         </AlertDialogContent>
       </AlertDialog>
     </Card>
-  )
+  );
 }

@@ -1,69 +1,90 @@
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Textarea } from '@/components/ui/textarea'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
-import { Phone, Mail, MapPin, Clock, MessageSquare, CheckCircle } from 'lucide-react'
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Clock,
+  MessageSquare,
+  CheckCircle,
+} from "lucide-react";
 
 interface ContactFormData {
-  name: string
-  email: string
-  phone: string
-  subject: string
-  message: string
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
 }
 
 const contactInfo = [
   {
     icon: Phone,
-    title: 'Call Us Now',
-    details: '(818) 431-0808',
-    description: 'Speak with a transport specialist'
+    title: "Call Us Now",
+    details: "(818) 431-0808",
+    description: "Speak with a transport specialist",
   },
   {
     icon: Mail,
-    title: 'Email Us',
-    details: 'chris@marser.us',
-    description: 'Get a response within 1 hour'
+    title: "Email Us",
+    details: "chris@marser.us",
+    description: "Get a response within 1 hour",
   },
   {
     icon: Clock,
-    title: 'Business Hours',
-    details: '7 AM - 9 PM EST',
-    description: 'Monday through Sunday'
+    title: "Business Hours",
+    details: "7 AM - 9 PM EST",
+    description: "Monday through Sunday",
   },
   {
     icon: MapPin,
-    title: 'Service Area',
-    details: 'All 50 States',
-    description: 'Nationwide coverage'
-  }
-]
+    title: "Service Area",
+    details: "All 50 States",
+    description: "Nationwide coverage",
+  },
+];
 
 export default function ContactSection() {
   const [formData, setFormData] = useState<ContactFormData>({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  })
-  
-  const [showSuccessDialog, setShowSuccessDialog] = useState(false)
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Contact form submitted:', formData)
+    e.preventDefault();
+    console.log("Contact form submitted:", formData);
     // TODO: remove mock functionality - integrate with real contact system
-    setShowSuccessDialog(true)
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
-  }
+    setShowSuccessDialog(true);
+    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+  };
 
   const handleInputChange = (field: keyof ContactFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
   return (
     <section id="contact" className="py-20 bg-muted/30">
@@ -73,8 +94,8 @@ export default function ContactSection() {
             Get in Touch
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Have questions about auto transport? Need a custom quote? 
-            Our expert team is here to help you every step of the way.
+            Have questions about auto transport? Need a custom quote? Our expert
+            team is here to help you every step of the way.
           </p>
         </div>
 
@@ -87,7 +108,7 @@ export default function ContactSection() {
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {contactInfo.map((info, index) => {
-                  const IconComponent = info.icon
+                  const IconComponent = info.icon;
                   return (
                     <Card key={index} className="border-card-border">
                       <CardContent className="pt-6">
@@ -109,7 +130,7 @@ export default function ContactSection() {
                         </div>
                       </CardContent>
                     </Card>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -127,21 +148,21 @@ export default function ContactSection() {
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button 
-                    size="lg" 
+                  <Button
+                    size="lg"
                     className="bg-chart-1 hover:bg-chart-1/90 text-white flex-1"
                     data-testid="button-call-now"
-                    onClick={() => console.log('Call now clicked')}
+                    onClick={() => console.log("Call now clicked")}
                   >
                     <Phone className="h-4 w-4 mr-2" />
                     Call (818) 431-0808
                   </Button>
-                  <Button 
-                    variant="outline" 
-                    size="lg" 
+                  <Button
+                    variant="outline"
+                    size="lg"
                     className="flex-1"
                     data-testid="button-email-now"
-                    onClick={() => console.log('Email now clicked')}
+                    onClick={() => console.log("Email now clicked")}
                   >
                     <Mail className="h-4 w-4 mr-2" />
                     Send Email
@@ -168,7 +189,9 @@ export default function ContactSection() {
                       id="contact-name"
                       placeholder="Your name"
                       value={formData.name}
-                      onChange={(e) => handleInputChange('name', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("name", e.target.value)
+                      }
                       data-testid="input-contact-name"
                       required
                     />
@@ -180,7 +203,9 @@ export default function ContactSection() {
                       type="tel"
                       placeholder="(555) 123-4567"
                       value={formData.phone}
-                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                      onChange={(e) =>
+                        handleInputChange("phone", e.target.value)
+                      }
                       data-testid="input-contact-phone"
                       required
                     />
@@ -194,7 +219,7 @@ export default function ContactSection() {
                     type="email"
                     placeholder="your@email.com"
                     value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
                     data-testid="input-contact-email"
                     required
                   />
@@ -206,7 +231,9 @@ export default function ContactSection() {
                     id="contact-subject"
                     placeholder="What can we help you with?"
                     value={formData.subject}
-                    onChange={(e) => handleInputChange('subject', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("subject", e.target.value)
+                    }
                     data-testid="input-contact-subject"
                     required
                   />
@@ -219,14 +246,16 @@ export default function ContactSection() {
                     placeholder="Tell us about your auto transport needs..."
                     className="min-h-32"
                     value={formData.message}
-                    onChange={(e) => handleInputChange('message', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("message", e.target.value)
+                    }
                     data-testid="textarea-contact-message"
                     required
                   />
                 </div>
 
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   className="w-full bg-chart-1 hover:bg-chart-1/90 text-white py-6"
                   data-testid="button-send-message"
                 >
@@ -246,16 +275,18 @@ export default function ContactSection() {
               <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
                 <CheckCircle className="h-5 w-5 text-green-600" />
               </div>
-              <AlertDialogTitle className="text-green-800">Message Sent Successfully!</AlertDialogTitle>
+              <AlertDialogTitle className="text-green-800">
+                Message Sent Successfully!
+              </AlertDialogTitle>
             </div>
-            <AlertDialogDescription className="text-green-700">
+            <AlertDialogDescription className="text-black-700">
               Thank you for your message! We'll get back to you within 1 hour.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={() => setShowSuccessDialog(false)}
-              className="bg-green-600 hover:bg-green-700 text-white"
+              className="bg-black-600 hover:bg-black-700 text-black"
               data-testid="button-close-success-dialog"
             >
               OK
@@ -264,5 +295,5 @@ export default function ContactSection() {
         </AlertDialogContent>
       </AlertDialog>
     </section>
-  )
+  );
 }

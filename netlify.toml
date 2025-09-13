@@ -1,0 +1,70 @@
+[build]
+  # Build command - uses script to handle Replit's dist/public output format
+  command = "bash build-scripts/netlify-build.sh"
+  
+  # Publish directory - Netlify expects the built files here
+  # Note: Replit builds to dist/public, but we'll create a build script to handle this
+  publish = "dist"
+  
+  # Base directory for build
+  base = "."
+
+[build.environment]
+  # Node version
+  NODE_VERSION = "18"
+  
+  # Production build
+  NODE_ENV = "production"
+
+# SPA redirect rules for client-side routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers for better performance and security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Cache static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Dev context for branch deploys - use same build script for consistency
+[context.branch-deploy]
+  command = "bash build-scripts/netlify-build.sh"
+
+[context.deploy-preview]
+  command = "bash build-scripts/netlify-build.sh"
+
+# Forms handling for contact forms (if needed)
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
