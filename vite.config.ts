@@ -7,6 +7,8 @@ import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  // Ensure Vite reads env vars from repo root where your .env lives
+  envDir: __dirname,
   plugins: [
     react(),
     runtimeErrorOverlay(),

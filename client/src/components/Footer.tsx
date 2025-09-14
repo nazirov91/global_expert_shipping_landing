@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useGlobals } from "@/lib/globals";
 import {
   Phone,
   Mail,
@@ -47,6 +48,7 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const { businessName } = useGlobals();
   const scrollToSection = (sectionId: string) => {
     const id = sectionId.startsWith("#") ? sectionId.substring(1) : sectionId;
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -61,9 +63,7 @@ export default function Footer() {
         <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-2">
-            <div className="text-2xl font-bold text-primary mb-4">
-              Global Expert Shipping
-            </div>
+            <div className="text-2xl font-bold text-primary mb-4">{businessName}</div>
             <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
               America's trusted auto transport company with over 15 years of
               experience. We provide safe, reliable, and affordable vehicle
@@ -132,9 +132,7 @@ export default function Footer() {
         {/* Bottom Footer */}
         <div className="py-6 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-sm text-muted-foreground">
-              © {currentYear} Global Expert Shipping. All rights reserved.
-            </div>
+            <div className="text-sm text-muted-foreground">© {currentYear} {businessName}. All rights reserved.</div>
 
             <div className="flex items-center gap-6 text-sm">
               <button

@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import HomePage from "@/components/HomePage";
 import NotFound from "@/pages/not-found";
+import { GlobalsProvider } from "@/lib/globals";
 
 function Router() {
   return (
@@ -19,10 +20,12 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
+      <GlobalsProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Router />
+        </TooltipProvider>
+      </GlobalsProvider>
     </QueryClientProvider>
   );
 }

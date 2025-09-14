@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone } from "lucide-react";
+import { useGlobals } from "@/lib/globals";
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { businessName } = useGlobals();
 
   const scrollToSection = (sectionId: string) => {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
@@ -17,7 +19,7 @@ export default function Navigation() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <a href="/" className="flex items-center" data-testid="header-logo">
-              <div className="text-2xl font-bold text-primary">Global Expert Shipping</div>
+              <div className="text-2xl font-bold text-primary">{businessName}</div>
             </a>
           </div>
 

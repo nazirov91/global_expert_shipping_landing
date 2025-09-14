@@ -58,7 +58,8 @@
 
   --muted: 210 15% 92%;
 
-  --muted-foreground: 210 15% 45%;
+  /* Make muted text very readable (nearly primary contrast) */
+  --muted-foreground: 210 15% 28%;
 
   --accent: 210 25% 88%;
 
@@ -176,7 +177,8 @@
 
   --muted: 210 15% 16%;
 
-  --muted-foreground: 210 15% 65%;
+  /* Make muted text very readable in dark mode (near foreground) */
+  --muted-foreground: 210 20% 88%;
 
   --accent: 210 15% 18%;
 

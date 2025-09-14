@@ -11,7 +11,7 @@ Preferred communication style: Simple, everyday language.
 ## System Architecture
 
 ### Static Website
-- **Purely static** - website that can be hosted on any static web hosting service including Netlify, Vercel or Decap CMS
+- **Purely static** - website that can be hosted on any static web hosting service including Vercel or Decap CMS
 - **No Backend Dependancy** - It does not depend on backend. It executes all http calls on the front end
 
 ### Design System

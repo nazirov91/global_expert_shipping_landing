@@ -10,30 +10,7 @@ This project is configured to deploy to multiple platforms while maintaining Rep
 - **Status**: ✅ Active and working
 
 ### Netlify
-- **Configuration File**: `netlify.toml`
-- **Build Command**: `bash build-scripts/netlify-build.sh`
-- **Output Directory**: `dist`
-- **Features**:
-  - SPA routing support
-  - Optimized caching headers
-  - Security headers
-  - Automatic _redirects handling
-
-**Deployment Options**:
-
-1. **Netlify Native Build** (Recommended):
-   - Connect GitHub repo to Netlify
-   - Netlify will automatically use `netlify.toml` configuration
-   - The build command properly handles Replit's `dist/public` format
-
-2. **Manual Deployment**:
-   - Run: `bash build-scripts/netlify-build.sh`
-   - Deploy the `dist` folder to Netlify
-
-3. **GitHub Actions Deployment**:
-   - Workflow available in `.github/workflows/deploy-netlify.yml`
-   - Set `NETLIFY_AUTH_TOKEN` and `NETLIFY_SITE_ID` secrets in GitHub
-   - Uses Netlify CLI for deployment
+Removed. This project no longer includes Netlify configuration or workflows.
 
 ### Vercel
 - **Configuration File**: `vercel.json`
@@ -58,8 +35,8 @@ This project is configured to deploy to multiple platforms while maintaining Rep
   - Local development support
 
 **Setup**:
-1. Enable Netlify Identity for authentication
-2. Set up Git Gateway in Netlify
+1. Configure your preferred authentication method (if needed)
+2. Deploy to your chosen static host
 3. Access admin at `/admin/` after deployment
 
 ### Generic Static Hosting
@@ -80,7 +57,7 @@ The build scripts automatically handle this conversion while maintaining compati
 
 Content is managed through:
 1. **Static files**: Direct editing of files in `content/`
-2. **Decap CMS**: Visual interface at `/admin/` (when deployed with Netlify)
+2. **Decap CMS**: Visual interface at `/admin/`
 3. **Git workflow**: All changes are version controlled
 
 ## Environment Variables
@@ -99,12 +76,10 @@ For different deployment environments, set:
 ## File Structure
 
 ```
-├── netlify.toml              # Netlify configuration
 ├── vercel.json              # Vercel configuration
 ├── client/
-│   ├── _redirects           # SPA routing rules
 │   └── admin/               # Decap CMS admin
 ├── build-scripts/           # Cross-platform build scripts
 ├── content/                 # CMS content files
-└── .github/workflows/       # CI/CD workflows
+└── .github/workflows/       # CI/CD workflows (Netlify workflow removed)
 ```
