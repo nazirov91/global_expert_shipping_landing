@@ -21,14 +21,7 @@ if [ -f "${APP_DIR}/package.json" ]; then
   popd >/dev/null
 fi
 
-# 3) Build (prefer vite.config.netlify.ts if present in APP_DIR)
-if [ -f "${APP_DIR}/vite.config.netlify.ts" ]; then
-  echo "Using Netlify-specific Vite config..."
-  (cd "${APP_DIR}" && npx vite build --config vite.config.netlify.ts)
-else
-  echo "Using package build script..."
-  (cd "${APP_DIR}" && npm run build)
-fi
+cd "${APP_DIR}" && npm run build
 
 # 4) Locate build output
 OUTPUT_CANDIDATES=(
