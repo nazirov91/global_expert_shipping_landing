@@ -1,12 +1,7 @@
 [build]
-  # Build command - uses script to handle Replit's dist/public output format
-  command = "bash build-scripts/netlify-build.sh"
-  
-  # Publish directory - Netlify expects the built files here
-  # Note: Replit builds to dist/public, but we'll create a build script to handle this
+  # Simple Vite build without custom scripts
+  command = "npm run build"
   publish = "dist"
-  
-  # Base directory for build
   base = "."
 
 [build.environment]
@@ -49,10 +44,10 @@
 
 # Dev context for branch deploys - use same build script for consistency
 [context.branch-deploy]
-  command = "bash build-scripts/netlify-build.sh"
+  command = "npm run build"
 
 [context.deploy-preview]
-  command = "bash build-scripts/netlify-build.sh"
+  command = "npm run build"
 
 # Forms handling for contact forms (if needed)
 [build.processing]
