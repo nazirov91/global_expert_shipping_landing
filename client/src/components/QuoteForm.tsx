@@ -134,7 +134,7 @@ export default function QuoteForm() {
               <Input
                 id="phone"
                 type="tel"
-                placeholder="(555) 123-4567"
+                placeholder="1-888-889-0939"
                 value={formData.phone}
                 onChange={(e) => handleInputChange('phone', e.target.value)}
                 data-testid="input-phone"

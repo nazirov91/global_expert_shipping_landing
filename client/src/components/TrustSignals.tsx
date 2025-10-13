@@ -6,7 +6,7 @@ const trustSignals = [
   {
     icon: Shield,
     title: 'FMCSA Licensed',
-    subtitle: 'MC-123456',
+    subtitle: 'USDOT 2246322',
     description: 'Fully licensed and regulated by Federal Motor Carrier Safety Administration'
   },
   {
