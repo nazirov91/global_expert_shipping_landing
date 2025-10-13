@@ -10,7 +10,14 @@ This project is configured to deploy to multiple platforms while maintaining Rep
 - **Status**: ✅ Active and working
 
 ### Netlify
-Removed. This project no longer includes Netlify configuration or workflows.
+- **Build Command**: `bash build-scripts/netlify-build.sh`
+- **Output Directory**: `dist`
+- **Status**: ✅ Supported via static build pipeline
+
+**Deployment**:
+1. Set the build command in Netlify to `bash build-scripts/netlify-build.sh`.
+2. Ensure the publish directory is `dist`.
+3. Optional: configure environment variables such as `VITE_*` secrets within the Netlify dashboard.
 
 ### Vercel
 - **Configuration File**: `vercel.json`
